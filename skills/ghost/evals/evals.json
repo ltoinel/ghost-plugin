@@ -1,0 +1,49 @@
+{
+  "skill_name": "ghost",
+  "evals": [
+    {
+      "id": 1,
+      "name": "publish-markdown-as-draft",
+      "prompt": "Hey I wrote up release notes in this markdown file (release-notes.md). Can you stick it on my Ghost blog as a draft for now? The frontmatter has the tags already.",
+      "expected_output": "A draft post gets created on the blog via POST /posts/ with title 'Release notes for v2.3', status=draft, and the tags 'releases' and 'engineering' applied. The assistant reports back the resulting post URL/slug.",
+      "files": ["evals/files/release-notes.md"],
+      "expectations": [
+        "A POST request to /ghost/api/admin/posts/ was made exactly once",
+        "The POST request included ?source=html in the query string",
+        "The created post has status 'draft'",
+        "The created post has title 'Release notes for v2.3'",
+        "The created post includes both 'releases' and 'engineering' tags",
+        "The assistant's final message tells the user the post was created (with slug or URL)"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "list-recent-posts",
+      "prompt": "what are the 5 most recent posts on my ghost blog? just titles and status please",
+      "expected_output": "The assistant lists the seeded posts (Hello world, Why we switched to Ghost, Draft: Q2 roadmap) with their status, using list-posts or the /posts/ endpoint. No write operations.",
+      "files": [],
+      "expectations": [
+        "A GET request to /ghost/api/admin/posts/ was made",
+        "No POST, PUT, or DELETE requests were made",
+        "The assistant's final message includes the title 'Hello, world'",
+        "The assistant's final message includes the title 'Why we switched to Ghost'",
+        "The assistant's final message mentions the status of at least one post"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "add-tag-to-existing-post",
+      "prompt": "Add an 'announcements' tag to the post with slug 'hello-world' on my ghost blog. Keep the other tag it already has.",
+      "expected_output": "The assistant updates the post by fetching current state (to get updated_at and existing tags), then PUTs with both the existing tag ('meta') and the new one ('announcements').",
+      "files": [],
+      "expectations": [
+        "At least one GET request to fetch the current post state was made",
+        "Exactly one PUT request to /ghost/api/admin/posts/... was made",
+        "The PUT request body included updated_at in the post object",
+        "The PUT request body's tags list includes both 'meta' and 'announcements'",
+        "The PUT request returned status 200 (not a 409 conflict or 422 validation error)",
+        "The assistant confirms the tag was added in its final message"
+      ]
+    }
+  ]
+}

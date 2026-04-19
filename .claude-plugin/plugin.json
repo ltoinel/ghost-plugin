@@ -1,0 +1,9 @@
+{
+  "name": "ghost",
+  "version": "0.1.0",
+  "description": "Read from and publish to a Ghost CMS blog via the Admin API — list posts, create drafts from Markdown files with frontmatter, update posts with proper optimistic-concurrency handling.",
+  "author": {
+    "name": "ltoinel"
+  },
+  "keywords": ["ghost", "cms", "blog", "publishing", "markdown"]
+}
