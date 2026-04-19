@@ -1,0 +1,22 @@
+name: Build and publish ghost.plugin
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build ghost.plugin
+        run: zip -r ghost.plugin . -x "ghost.plugin" "*.DS_Store" "*.pyc" "__pycache__/*" ".git/*" ".github/*"
+
+      - name: Upload to release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload "${{ github.event.release.tag_name }}" ghost.plugin --clobber
