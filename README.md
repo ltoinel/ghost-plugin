@@ -10,6 +10,12 @@ Once installed, you can ask Claude things like:
 
 ## Install
 
+### Via the Claude Marketplace
+
+Add the [Claude Marketplace](https://github.com/ltoinel/claude-marketplace/) to browse available plugins — the Ghost plugin appears there and can be installed in one click.
+
+### Manual install
+
 Drag `ghost.plugin` into **Cowork** (desktop app) or **Claude Code** — a card appears with an **Install** button.
 
 Then export your Ghost credentials in the shell where Claude runs:
